@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 12px 20px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #2563eb;
+            color: white;
+        }
+
+        a {
+            color: #2563eb;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>URL Shortener</h1>
+
+    <p style="text-align:center;">
+        Convert your long URLs into short URLs easily.
+    </p>
+
+    <form method="POST" action="/url">
+        <input
+            type="url"
+            name="url"
+            placeholder="Enter Original URL"
+            required
+        >
+
+        <button type="submit">Generate</button>
+    </form>
+
+    <h2>URL History</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Short ID</th>
+                <th>Original URL</th>
+                <th>Total Clicks</th>
+                <th>Created At</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% allUrls.forEach((url) => { %>
+                <tr>
+                    <td>
+                        <a href="/url/<%= url.shortId %>">
+                            <%= url.shortId %>
+                        </a>
+                    </td>
+
+                    <td>
+                        <a href="<%= url.originalUrl %>" target="_blank">
+                            <%= url.originalUrl %>
+                        </a>
+                    </td>
+
+                    <td><%= url.visitedHistory.length %></td>
+
+                    <td><%= url.createdAt.toLocaleString() %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>
